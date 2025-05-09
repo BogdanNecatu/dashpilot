@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/shared/lib/auth";
 import { redirect } from "next/navigation";
+import Dashboard from "@/widgets/dashboard/Dashboard";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
@@ -10,13 +11,12 @@ export default async function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-4">
-      <div>
-        <h1 className="text-3xl font-bold mb-4">Welcome to the Dashboard</h1>
-        <p className="text-muted-foreground">
-          You are signed in as <strong>{session.user?.email}</strong>.
-        </p>
-      </div>
-    </div>
+    <section className="max-w-7xl mx-auto px-4 py-6">
+      <h2 className="text-2xl font-semibold mb-4">Dashboard</h2>
+      <p className="mb-4 text-gray-600 dark:text-gray-300">
+        Signed in as <strong>{session.user?.email}</strong>
+      </p>
+      <Dashboard />
+    </section>
   );
 }
