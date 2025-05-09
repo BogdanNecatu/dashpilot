@@ -64,6 +64,5 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
   },
-  // 👇 NECESARIO para cifrado JWT
   secret: process.env.NEXTAUTH_SECRET,
 };
