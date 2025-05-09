@@ -8,10 +8,8 @@ export default function ThemeProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [theme] = useTheme();
   const [mounted, setMounted] = useState(false);
 
-  // Esperamos al montaje del cliente para evitar mismatch en SSR
   useEffect(() => {
     setMounted(true);
   }, []);
