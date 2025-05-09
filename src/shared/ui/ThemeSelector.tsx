@@ -1,6 +1,6 @@
 "use client";
 
-import { useTheme } from "@/shared/hooks/useTheme";
+import { useTheme } from "@/shared/hooks/useTheme/useTheme";
 
 export default function ThemeSelector() {
   const [theme, setTheme] = useTheme();
