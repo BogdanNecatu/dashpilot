@@ -37,55 +37,59 @@ export default function LoginForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="w-full max-w-md mx-auto p-6 border border-gray-200 dark:border-white/10 rounded-lg space-y-6"
-    >
-      <h2 className="text-xl font-semibold text-center">Sign in</h2>
-
-      <div className="flex flex-col gap-2">
-        <label htmlFor="email" className="text-sm font-medium">
-          Email
-        </label>
-        <input
-          id="email"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="px-3 py-2 border rounded outline-none border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <div className="flex flex-col gap-2 relative">
-        <label htmlFor="password" className="text-sm font-medium">
-          Password
-        </label>
-        <input
-          id="password"
-          type={showPassword ? "text" : "password"}
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="px-3 py-2 pr-10 border rounded outline-none border-gray-300 dark:border-gray-700 focus:ring-2 focus:ring-blue-500"
-        />
-        <span
-          className="absolute right-3 top-10 cursor-pointer text-gray-500"
-          onClick={() => setShowPassword((prev) => !prev)}
-        >
-          {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
-        </span>
-      </div>
-
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded disabled:opacity-50 transition"
+    <div className="flex items-center justify-center bg-background px-4">
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md mx-auto p-6 border-2 border-gray-300 dark:border-white/20 rounded-xl shadow-lg space-y-6 bg-white dark:bg-zinc-900"
       >
-        {loading ? "Signing in..." : "Sign in"}
-      </button>
-    </form>
+        <h2 className="text-2xl font-bold text-center text-foreground">
+          Sign in
+        </h2>
+
+        <div className="flex flex-col gap-2">
+          <label htmlFor="email" className="text-sm font-medium">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="px-3 py-2 border rounded outline-none border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-800 text-black dark:text-white focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="flex flex-col gap-2 relative">
+          <label htmlFor="password" className="text-sm font-medium">
+            Password
+          </label>
+          <input
+            id="password"
+            type={showPassword ? "text" : "password"}
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="px-3 py-2 pr-10 border rounded outline-none border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-800 text-black dark:text-white focus:ring-2 focus:ring-blue-500"
+          />
+          <span
+            className="absolute right-3 top-[38px] cursor-pointer text-gray-500"
+            onClick={() => setShowPassword((prev) => !prev)}
+          >
+            {showPassword ? <EyeSlashIcon /> : <EyeIcon />}
+          </span>
+        </div>
+
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+
+        <button
+          type="submit"
+          disabled={loading}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded disabled:opacity-50 transition"
+        >
+          {loading ? "Signing in..." : "Sign in"}
+        </button>
+      </form>
+    </div>
   );
 }

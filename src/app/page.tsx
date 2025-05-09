@@ -1,6 +1,6 @@
 export default function HomePage() {
   return (
-    <section className="flex flex-col items-center justify-center h-full text-center gap-6 px-4 py-20">
+    <section className="flex flex-col items-center justify-center min-h-screen text-center gap-6 px-4 py-16">
       <h1 className="text-4xl font-bold text-foreground">
         Bienvenido a <span className="text-blue-600">DashPilot</span>
       </h1>

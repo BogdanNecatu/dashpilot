@@ -5,9 +5,7 @@ import { redirect } from "next/navigation";
 export default async function DatasetPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect("/login");
-  }
+  if (!session) redirect("/login");
 
   return (
     <section>
