@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTheme } from "@/shared/hooks/useTheme";
 
 export default function ThemeProvider({
   children,
