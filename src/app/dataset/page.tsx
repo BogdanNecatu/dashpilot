@@ -11,7 +11,8 @@ export default async function DatasetPage() {
     <section className="max-w-7xl mx-auto px-4 py-6">
       <h2 className="text-2xl font-semibold mb-4">Dataset</h2>
       <p className="mb-4 text-gray-600">
-        This is protected data visible only to authenticated users.
+        Users can search and sort the available data by name, age, and birth
+        date.
       </p>
       <UserTable />
     </section>
