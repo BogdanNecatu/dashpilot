@@ -14,6 +14,7 @@ export const fetchUsers = async (page: number, limit: number = 10) => {
       `/users?limit=${limit}&skip=${skip}`
     );
     const { users, total } = res.data;
+    console.log(users);
     store.setUsers(users, total, page, limit);
   } catch (err: any) {
     store.setError(err.message);
