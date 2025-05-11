@@ -14,35 +14,21 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials): Promise<SessionUser | null> {
         try {
-          console.log("🔐 Received credentials:", credentials);
+          const email = credentials?.email || "";
+          const password = credentials?.password || "";
 
-          const user = mockUsers.find((u) => u.email === credentials?.email);
-          console.log("👤 User found:", user);
+          const user = mockUsers.find((u) => u.email === email);
+          if (!user) return null;
 
-          if (!user) {
-            console.log("❌ No user found with that email");
-            return null;
-          }
+          const passwordMatch = await compare(password, user.password);
+          if (!passwordMatch) return null;
 
-          const passwordMatch = await compare(
-            credentials!.password,
-            user.password
-          );
-          console.log("🔑 Password match:", passwordMatch);
-
-          if (!passwordMatch) {
-            console.log("❌ Password does not match");
-            return null;
-          }
-
-          console.log("✅ Login successful");
           return {
             id: user.id,
             name: user.name,
             email: user.email,
           };
-        } catch (error) {
-          console.error("💥 Error in authorize():", error);
+        } catch {
           return null;
         }
       },
