@@ -37,7 +37,7 @@ export default function GenderPieChart({ users }: Props) {
       legend: {
         position: "bottom" as const,
         labels: {
-          color: "#000", // for light mode
+          color: "#000",
         },
       },
     },

@@ -2,8 +2,8 @@
 
 You can sign in using the following users:
 
-- **Email**: jose@gmail.com  
+- **Email**: jose@test.com  
   **Password**: Password111@
 
-- **Email**: ana@gmail.com  
+- **Email**: ana@test.com  
   **Password**: Password222@

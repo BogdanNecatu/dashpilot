@@ -102,7 +102,7 @@ export default function PaginationControls({
           value={limit}
           onChange={(e) => {
             onLimitChange(Number(e.target.value));
-            onPageChange(1); // reset to page 1
+            onPageChange(1); 
           }}
           className="border px-2 py-1 rounded bg-white dark:bg-gray-700 dark:text-white"
         >
