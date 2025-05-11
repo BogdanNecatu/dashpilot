@@ -1,6 +1,16 @@
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import logo from "@/assets/images/dashpilot.png";
+
 export default function HomePage() {
+  const { data: session } = useSession();
   return (
-    <section className="flex flex-col items-center justify-center min-h-screen text-center gap-6 px-4 py-16">
+    <section className="flex flex-col items-center justify-center px-4 py-16 text-center gap-8">
+      <Image src={logo} alt="DashPilot Logo" width={396} height={396} />
+
       <h1 className="text-4xl font-bold text-foreground">
         Bienvenido a <span className="text-blue-600">DashPilot</span>
       </h1>
@@ -11,19 +21,21 @@ export default function HomePage() {
         gestión de datos y testing.
       </p>
 
-      <div className="flex flex-col sm:flex-row gap-4 mt-6">
-        <a
-          href="/login"
-          className="bg-foreground text-background px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-800 dark:hover:bg-white/80 transition"
-        >
-          Iniciar sesión
-        </a>
-        <a
+      <div className="flex flex-col sm:flex-row gap-4 mt-4">
+        {!session && (
+          <Link
+            href="/login"
+            className="px-6 py-2 rounded-full text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition"
+          >
+            Iniciar sesión
+          </Link>
+        )}
+        <Link
           href="/dashboard"
-          className="border border-gray-300 dark:border-white/20 px-6 py-2 rounded-full text-sm font-semibold hover:bg-gray-100 dark:hover:bg-white/10 transition"
+          className="px-6 py-2 rounded-full text-sm font-semibold bg-blue-600 text-white hover:bg-blue-700 transition"
         >
           Ir al Dashboard
-        </a>
+        </Link>
       </div>
     </section>
   );
