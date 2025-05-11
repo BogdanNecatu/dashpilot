@@ -33,7 +33,7 @@ export default function PaginationControls({
     const half = Math.floor(range / 2);
 
     let start = Math.max(1, page - half);
-    let end = Math.min(totalPages, start + range - 1);
+    const end = Math.min(totalPages, start + range - 1);
 
     if (end - start < range - 1) {
       start = Math.max(1, end - range + 1);

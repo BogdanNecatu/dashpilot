@@ -16,9 +16,11 @@ export const fetchUsers = async (page: number, limit: number = 10) => {
     const { users, total } = res.data;
     console.log(users);
     store.setUsers(users, total, page, limit);
-  } catch (err: any) {
-    store.setError(err.message);
-  } finally {
-    store.setLoading(false);
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      store.setError(err.message);
+    } else {
+      store.setError("Unknown error");
+    }
   }
 };
