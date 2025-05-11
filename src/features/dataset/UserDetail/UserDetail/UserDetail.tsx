@@ -10,7 +10,7 @@ type Props = {
 export default function UserDetail({ user }: Props) {
   return (
     <section className="max-w-5xl mx-auto px-4 py-6">
-      <div className="grid gap-6 lg:grid-cols-2">
+      <div className="grid gap-6">
         <UserDetailCard user={user} />
       </div>
     </section>
