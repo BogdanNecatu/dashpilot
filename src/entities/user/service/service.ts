@@ -9,7 +9,6 @@ export const fetchAllUsers = async (): Promise<{
   const store = useUserStore.getState();
 
   store.setLoading(true);
-  store.setError(null);
 
   try {
     const response = await axiosInstance.get<UsersApiResponse>(

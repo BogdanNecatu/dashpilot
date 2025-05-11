@@ -4,6 +4,7 @@ import { useUserStore } from "@/entities/user/store/useUserStore";
 import AgeBarChart from "../AgeBarChart/AgeBarChart";
 import GenderPieChart from "../GenderPieChart/GenderPieChart";
 import BirthYearLineChart from "../BirthYearLineChart/BirthYearLineChart";
+import WeightDistributionChart from "../WeightDistributionChart/WeightDistributionChart";
 
 export default function DashboardPanel() {
   const users = useUserStore((state) => state.users);
@@ -38,6 +39,13 @@ export default function DashboardPanel() {
             Users by Birth Year
           </h3>
           <BirthYearLineChart users={users} />
+        </div>
+
+        <div className="p-4 border rounded shadow bg-white dark:bg-gray-800 col-span-1 md:col-span-2">
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
+            Weight Distribution
+          </h3>
+          <WeightDistributionChart users={users} />
         </div>
       </div>
     </div>
