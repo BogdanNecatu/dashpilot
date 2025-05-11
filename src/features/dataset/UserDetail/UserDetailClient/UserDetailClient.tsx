@@ -10,7 +10,7 @@ export default function UserDetailClient() {
   const { id } = useParams();
   useEnsureUsersLoaded();
 
-  const userId = Number(id);
+  const isNumberId = Number(id);
 
   const { loading, hasUsers, getUserById } = useUserStore();
 
@@ -41,14 +41,32 @@ export default function UserDetailClient() {
     );
   }
 
-  const user = getUserById(Number(userId));
+  function getSafeUserId(
+    isNumberId: unknown,
+    fallbackId: unknown
+  ): string | number {
+    if (typeof isNumberId === "number" && !Number.isNaN(isNumberId)) {
+      return isNumberId;
+    }
+    if (typeof fallbackId === "number" || typeof fallbackId === "string") {
+      return fallbackId;
+    }
+    return "";
+  }
+
+  const userID = getSafeUserId(isNumberId, id);
+
+  const user =
+    typeof isNumberId === "number" && !Number.isNaN(isNumberId)
+      ? getUserById(userID as number)
+      : null;
 
   if (!user) {
     return (
       <section className="max-w-4xl mx-auto px-4 py-10 text-center">
         <h2 className="text-2xl font-bold mb-4 text-red-500">User not found</h2>
         <p className="text-gray-600 dark:text-gray-300">
-          No user with ID <code>{userId}</code> was found in the loaded dataset.
+          No user with ID <code>{userID}</code> was found in the loaded dataset.
         </p>
         <p className="mt-4">
           <Link
