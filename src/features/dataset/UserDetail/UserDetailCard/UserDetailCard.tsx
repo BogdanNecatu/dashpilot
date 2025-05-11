@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { User } from "@/entities/user/types";
 
 type Props = {
@@ -9,28 +9,41 @@ type Props = {
 };
 
 export default function UserDetailCard({ user }: Props) {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
   const fallbackImage = `https://randomuser.me/api/portraits/${
     user.gender === "male" ? "men" : "women"
   }/${user.id % 100}.jpg`;
 
   return (
     <>
+      {!imageLoaded && (
+        <div className="flex justify-center items-center py-20">
+          <p className="text-gray-500 dark:text-gray-400 animate-pulse">
+            Loading profile...
+          </p>
+        </div>
+      )}
+
       <div
-        className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-3xl 
-      border-2 border-blue-500 
-      shadow-[0_4px_8px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(0,0,0,0.06)] 
-      dark:shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_2px_3px_rgba(255,255,255,0.05)]
-      px-4 sm:px-6 md:px-8 py-6 mt-6 space-y-6 overflow-hidden transition-all duration-300"
+        className={`transition-opacity duration-300 ${
+          imageLoaded
+            ? "opacity-100"
+            : "opacity-0 pointer-events-none h-0 overflow-hidden"
+        } max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-3xl 
+        border-2 border-blue-500 
+        shadow-[0_4px_8px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(0,0,0,0.06)] 
+        dark:shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_2px_3px_rgba(255,255,255,0.05)]
+        px-4 sm:px-6 md:px-8 py-6 mt-6 space-y-6 overflow-hidden`}
       >
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 min-h-[160px]">
-          <Image
+          <img
             src={fallbackImage}
             alt={`${user.firstName} ${user.lastName}`}
             width={160}
             height={160}
-            priority
-            unoptimized
+            onLoad={() => setImageLoaded(true)}
             className="rounded-full object-cover border-4 border-blue-500 shadow-xl shrink-0"
           />
           <div className="text-center sm:text-left">
@@ -94,15 +107,17 @@ export default function UserDetailCard({ user }: Props) {
           </div>
         </div>
       </div>
-      {/* Go back button */}
-      <div className="text-center pt-4">
-        <Link
-          href="/dataset"
-          className="inline-block px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-        >
-          Go back to dataset
-        </Link>
-      </div>
+
+      {imageLoaded && (
+        <div className="text-center pt-4">
+          <Link
+            href="/dataset"
+            className="inline-block px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+          >
+            Go back to dataset
+          </Link>
+        </div>
+      )}
     </>
   );
 }
