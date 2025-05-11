@@ -30,6 +30,7 @@ export default function UserDetailCard({ user }: Props) {
             width={160}
             height={160}
             priority
+            unoptimized
             className="rounded-full object-cover border-4 border-blue-500 shadow-xl shrink-0"
           />
           <div className="text-center sm:text-left">
