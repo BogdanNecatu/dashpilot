@@ -1,10 +1,9 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/shared/lib/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import DatasetClient from "@/features/dataset/UserTableClient/UserTableClient";
 
 export default async function DatasetPage() {
-  const session = await getServerSession(authOptions);
+  const session = await auth();
   if (!session) redirect("/login");
 
   return (
