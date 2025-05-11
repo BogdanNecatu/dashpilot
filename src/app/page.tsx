@@ -2,11 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useSession } from "next-auth/react";
 import logo from "@/assets/images/dashpilot.png";
 
 export default function HomePage() {
-  const { data: session } = useSession();
   return (
     <section className="flex flex-col items-center justify-center px-4 py-16 text-center gap-8">
       <div className="relative w-[280px] h-[70px]">
