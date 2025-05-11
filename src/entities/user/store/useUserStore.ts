@@ -1,42 +1,45 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { UserStore } from "../types";
+import { UserStore, User } from "../types";
 
-export const useUserStore = create<UserStore>()(
-  persist(
-    (set, get) => ({
-      users: [],
-      total: 0,
-      page: 1,
-      totalPages: 0,
-      loading: false,
-      error: null,
-      setUsers: (newUsers, total, page, limit) =>
-        set((state) => ({
-          users: [
-            ...state.users,
-            ...newUsers.filter(
-              (u) => !state.users.some((existing) => existing.id === u.id)
-            ),
-          ],
-          total,
-          page,
-          totalPages: Math.ceil(total / limit),
-        })),
-      setLoading: (loading) => set({ loading }),
-      setError: (msg) => set({ error: msg }),
-      getAllUsers: () => get().users,
-      getUserById: (id) => get().users.find((u) => u.id === id),
-      hasUsers: () => get().users.length > 0,
-    }),
-    {
-      name: "user-store",
-      partialize: (state) =>
-        Object.fromEntries(
-          Object.entries(state).filter(([key]) =>
-            ["users", "total", "page", "totalPages"].includes(key)
-          )
-        ),
+export const useUserStore = create<UserStore>((set, get) => ({
+  users: [],
+  total: 0,
+  page: 1,
+  totalPages: 0,
+  loading: false,
+  error: null,
+
+  setUsers: (newUsers: User[], total, page, limit) => {
+    set({
+      users: newUsers,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
+
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user-store", JSON.stringify(newUsers));
     }
-  )
-);
+  },
+
+  hydrateUsers: () => {
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("user-store");
+      if (stored) {
+        const parsed: User[] = JSON.parse(stored);
+        set({
+          users: parsed,
+          total: parsed.length,
+          page: 1,
+          totalPages: Math.ceil(parsed.length / 20),
+        });
+      }
+    }
+  },
+
+  setLoading: (loading) => set({ loading }),
+  setError: (msg) => set({ error: msg }),
+  getAllUsers: () => get().users,
+  getUserById: (id) => get().users.find((u) => u.id === id),
+  hasUsers: () => get().users.length > 0,
+}));

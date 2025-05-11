@@ -42,13 +42,3 @@ export interface UsersApiResponse {
   skip: number;
   limit: number;
 }
-
-export interface StoreState {
-  users: User[];
-  total: number;
-  totalPages: number;
-  page: number;
-  loading: boolean;
-  error: string | null;
-  fetchUsers: (page: number, limit: number) => Promise<void>;
-}

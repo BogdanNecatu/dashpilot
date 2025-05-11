@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import { useUserStore } from "@/entities/user/store/useUserStore";
 import { fetchAllUsers } from "@/entities/user/service/service";
-import DashboardPanel from "../DashboardPanel/DashboardPanel";
+import UserTable from "../UserTable/UserTable";
 
-export default function DashboardClient() {
-  const { loading, error, hasUsers, setUsers, setLoading, setError } =
+export default function UserTableClient() {
+  const { hasUsers, setUsers, setLoading, setError, loading, error } =
     useUserStore();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function DashboardClient() {
           if (err instanceof Error) {
             setError(err.message);
           } else {
-            setError("Failed to load users");
+            setError("Failed to load dataset.");
           }
         } finally {
           setLoading(false);
@@ -34,7 +34,7 @@ export default function DashboardClient() {
   if (loading) {
     return (
       <p className="text-center text-gray-500 dark:text-gray-300">
-        Loading dashboard data...
+        Loading dataset...
       </p>
     );
   }
@@ -42,10 +42,10 @@ export default function DashboardClient() {
   if (error) {
     return (
       <p className="text-center text-red-600 dark:text-red-400 font-semibold">
-        Unable to load dashboard data. Please try again later.
+        {error}
       </p>
     );
   }
 
-  return <DashboardPanel />;
+  return <UserTable />;
 }

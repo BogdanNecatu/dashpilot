@@ -74,17 +74,22 @@ export interface UsersApiResponse {
   limit: number;
 }
 
-export interface UserStore {
+export type UserStore = {
   users: User[];
   total: number;
-  loading: boolean;
   page: number;
   totalPages: number;
+  loading: boolean;
   error: string | null;
+
+  // Mutaciones
   setUsers: (users: User[], total: number, page: number, limit: number) => void;
+  hydrateUsers: () => void;
   setLoading: (loading: boolean) => void;
-  setError: (msg: string | null) => void;
+  setError: (msg: string) => void;
+
+  // Selectores
   getAllUsers: () => User[];
   getUserById: (id: number) => User | undefined;
   hasUsers: () => boolean;
-}
+};

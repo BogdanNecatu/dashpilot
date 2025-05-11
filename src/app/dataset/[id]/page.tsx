@@ -9,8 +9,14 @@ export default async function UserDetailPage({
   params: { id: string };
 }) {
   const session = await getServerSession(authOptions);
-  if (!session) redirect("/login");
+  if (!session) {
+    redirect("/login");
+  }
 
-  const { id } = params;
-  return <UserDetailClient userId={id} />;
+  return (
+    <section className="max-w-7xl mx-auto px-4 py-6">
+      <h2 className="text-2xl font-semibold mb-4">User Detail</h2>
+      <UserDetailClient userId={params.id} />
+    </section>
+  );
 }

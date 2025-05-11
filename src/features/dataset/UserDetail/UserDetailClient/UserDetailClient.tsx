@@ -3,9 +3,22 @@
 import { useUserStore } from "@/entities/user/store/useUserStore";
 import Link from "next/link";
 import UserDetail from "../UserDetail/UserDetail";
+import { useEnsureUsersLoaded } from "@/shared/hooks/useEnsureUsersLoaded/useEnsureUsersLoaded";
 
 export default function UserDetailClient({ userId }: { userId: string }) {
-  const { hasUsers, getUserById } = useUserStore();
+  useEnsureUsersLoaded();
+
+  const { loading, hasUsers, getUserById } = useUserStore();
+
+  if (loading) {
+    return (
+      <section className="max-w-4xl mx-auto px-4 py-10 text-center">
+        <p className="text-gray-500 dark:text-gray-300 text-lg animate-pulse">
+          Loading user data...
+        </p>
+      </section>
+    );
+  }
 
   if (!hasUsers()) {
     return (
@@ -14,7 +27,11 @@ export default function UserDetailClient({ userId }: { userId: string }) {
           User data not loaded
         </h2>
         <p className="text-gray-600 dark:text-gray-300">
-          Please load the dataset first by visiting the Dataset page.
+          Please visit the{" "}
+          <Link href="/dataset" className="text-blue-600 underline">
+            Dataset page
+          </Link>{" "}
+          to load users.
         </p>
       </section>
     );
@@ -27,8 +44,7 @@ export default function UserDetailClient({ userId }: { userId: string }) {
       <section className="max-w-4xl mx-auto px-4 py-10 text-center">
         <h2 className="text-2xl font-bold mb-4 text-red-500">User not found</h2>
         <p className="text-gray-600 dark:text-gray-300">
-          The user with ID <code>{userId}</code> does not exist in the current
-          dataset.
+          No user with ID <code>{userId}</code> was found in the loaded dataset.
         </p>
         <p className="mt-4">
           <Link
