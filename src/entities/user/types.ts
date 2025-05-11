@@ -86,7 +86,7 @@ export type UserStore = {
   setUsers: (users: User[], total: number, page: number, limit: number) => void;
   hydrateUsers: () => void;
   setLoading: (loading: boolean) => void;
-  setError: (msg: string) => void;
+  setError: (msg: string | null) => void;
 
   // Selectores
   getAllUsers: () => User[];
