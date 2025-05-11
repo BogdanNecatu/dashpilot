@@ -1,12 +1,16 @@
 "use client";
 
 import { useUserStore } from "@/entities/user/store/useUserStore";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import UserDetail from "../UserDetail/UserDetail";
 import { useEnsureUsersLoaded } from "@/shared/hooks/useEnsureUsersLoaded/useEnsureUsersLoaded";
 
-export default function UserDetailClient({ userId }: { userId: string }) {
+export default function UserDetailClient() {
+  const { id } = useParams();
   useEnsureUsersLoaded();
+
+  const userId = Number(id);
 
   const { loading, hasUsers, getUserById } = useUserStore();
 

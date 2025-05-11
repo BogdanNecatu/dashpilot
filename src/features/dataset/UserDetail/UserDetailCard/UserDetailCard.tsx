@@ -1,21 +1,26 @@
 "use client";
 
-import { User } from "@/entities/user/types";
 import Image from "next/image";
+import { User } from "@/entities/user/types";
 
 type Props = {
   user: User;
 };
 
 export default function UserDetailCard({ user }: Props) {
+  const fallbackImage = `https://randomuser.me/api/portraits/${
+    user.gender === "male" ? "men" : "women"
+  }/${user.id % 100}.jpg`;
+
   return (
     <div className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 rounded-2xl shadow-md p-8 mt-10 space-y-6">
       <div className="flex items-center gap-6">
         <Image
-          src={user.image}
+          src={fallbackImage}
           alt={`${user.firstName} ${user.lastName}`}
           width={112}
           height={112}
+          priority
           className="rounded-full object-cover border-4 border-blue-500 shadow"
         />
         <div>
