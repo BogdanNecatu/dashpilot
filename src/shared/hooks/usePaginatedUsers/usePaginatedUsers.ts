@@ -1,13 +1,25 @@
-import { useEffect } from "react";
+"use client";
+
+import { useMemo } from "react";
 import { useUserStore } from "@/entities/user/store/useUserStore";
-import { fetchUsers } from "@/entities/user/service/service";
 
 export const usePaginatedUsers = (page: number, limit: number = 10) => {
-  const { users, total, loading, error, totalPages } = useUserStore();
+  const { users, loading, error, total } = useUserStore();
 
-  useEffect(() => {
-    fetchUsers(page, limit);
-  }, [page, limit]);
+  const totalPages = useMemo(() => {
+    return Math.ceil(users.length / limit);
+  }, [users.length, limit]);
 
-  return { users, total, loading, error, totalPages };
+  const paginatedUsers = useMemo(() => {
+    const startIndex = (page - 1) * limit;
+    return users.slice(startIndex, startIndex + limit);
+  }, [users, page, limit]);
+
+  return {
+    users: paginatedUsers,
+    total: total,
+    loading,
+    error,
+    totalPages,
+  };
 };

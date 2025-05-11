@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: ["dummyjson.com"], // ✅ permite cargar imágenes desde este dominio
+  },
 };
 
 export default nextConfig;

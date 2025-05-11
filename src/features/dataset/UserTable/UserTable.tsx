@@ -137,7 +137,8 @@ export default function UserTable() {
             {filteredSortedUsers.map((u, i) => (
               <tr
                 key={u.id}
-                className="border-t hover:bg-gray-50 dark:hover:bg-gray-700"
+                className="hover:bg-blue-100 dark:hover:bg-zinc-800 cursor-pointer"
+                onClick={() => (window.location.href = `/dataset/${u.id}`)}
               >
                 <td className="px-4 py-2 font-mono">
                   {(page - 1) * limit + i + 1}

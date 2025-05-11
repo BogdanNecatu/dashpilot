@@ -45,7 +45,6 @@ export default function Header() {
           </nav>
         )}
 
-        {/* Right side always visible */}
         <ThemeSelector />
       </div>
     </header>

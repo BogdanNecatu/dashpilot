@@ -2,29 +2,28 @@ import axiosInstance from "@/shared/api/axiosInstance";
 import { useUserStore } from "../store/useUserStore";
 import { UsersApiResponse } from "../types";
 
-export const fetchUsers = async (page: number, limit: number = 10) => {
-  const skip = (page - 1) * limit;
+export const fetchAllUsers = async (): Promise<{
+  users: UsersApiResponse["users"];
+  total: number;
+}> => {
   const store = useUserStore.getState();
 
   store.setLoading(true);
   store.setError(null);
 
   try {
-    const res = await axiosInstance.get<UsersApiResponse>(
-      `/users?limit=${limit}&skip=${skip}`
+    const response = await axiosInstance.get<UsersApiResponse>(
+      "/users?limit=1000&skip=0"
     );
-    const { users, total } = res.data;
+    const { users, total } = response.data;
 
-    store.setUsers(users, total, page, limit);
-
+    store.setUsers(users, total, 1, total);
     return { users, total };
   } catch (err: unknown) {
-    if (err instanceof Error) {
-      store.setError(err.message);
-    } else {
-      store.setError("Unknown error");
-    }
-    throw err;
+    const errorMessage = err instanceof Error ? err.message : "Unknown error";
+    store.setError(errorMessage);
+    throw new Error(errorMessage);
+  } finally {
     store.setLoading(false);
   }
 };

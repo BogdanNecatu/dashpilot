@@ -4,6 +4,8 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { FaEye as Eye, FaEyeSlash as EyeSlash } from "react-icons/fa";
+import { fetchAllUsers } from "@/entities/user/service/service";
+import { useUserStore } from "@/entities/user/store/useUserStore";
 
 const EyeIcon = Eye as unknown as React.FC<{ className?: string }>;
 const EyeSlashIcon = EyeSlash as unknown as React.FC<{ className?: string }>;
@@ -16,6 +18,12 @@ export default function LoginForm() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const {
+    setUsers,
+    setLoading: setStoreLoading,
+    setError: setStoreError,
+  } = useUserStore();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -27,11 +35,25 @@ export default function LoginForm() {
       password,
     });
 
-    setLoading(false);
-
     if (result?.ok) {
-      router.push("/dashboard");
+      try {
+        setStoreLoading(true);
+        setStoreError(null);
+        const { users, total } = await fetchAllUsers();
+        setUsers(users, total, 1, 20);
+        router.push("/dashboard");
+      } catch (err) {
+        if (err instanceof Error) {
+          setError("Login succeeded but user fetch failed: " + err.message);
+        } else {
+          setError("Unexpected error loading users after login.");
+        }
+      } finally {
+        setStoreLoading(false);
+        setLoading(false);
+      }
     } else {
+      setLoading(false);
       setError("Invalid credentials. Please try again.");
     }
   };

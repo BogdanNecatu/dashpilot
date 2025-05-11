@@ -13,26 +13,32 @@ export default function DashboardPanel() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div className="p-4 border rounded shadow bg-white dark:bg-gray-800">
-        <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
-          Age Distribution
-        </h3>
-        <AgeBarChart users={users} />
-      </div>
+    <div className="flex flex-col gap-6">
+      <p className="text-center text-sm text-gray-700 dark:text-gray-300">
+        <strong>{users.length}</strong> users loaded for analytics.
+      </p>
 
-      <div className="p-4 border rounded shadow bg-white dark:bg-gray-800">
-        <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
-          Gender Ratio
-        </h3>
-        <GenderPieChart users={users} />
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="p-4 border rounded shadow bg-white dark:bg-gray-800">
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
+            Age Distribution
+          </h3>
+          <AgeBarChart users={users} />
+        </div>
 
-      <div className="p-4 border rounded shadow bg-white dark:bg-gray-800 col-span-1 md:col-span-2">
-        <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
-          Users by Birth Year
-        </h3>
-        <BirthYearLineChart users={users} />
+        <div className="p-4 border rounded shadow bg-white dark:bg-gray-800">
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
+            Gender Ratio
+          </h3>
+          <GenderPieChart users={users} />
+        </div>
+
+        <div className="p-4 border rounded shadow bg-white dark:bg-gray-800 col-span-1 md:col-span-2">
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-800 dark:text-white">
+            Users by Birth Year
+          </h3>
+          <BirthYearLineChart users={users} />
+        </div>
       </div>
     </div>
   );
