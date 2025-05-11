@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 type Props = {
   page: number;
   totalPages: number;
@@ -15,6 +17,17 @@ export default function PaginationControls({
   limit,
   onLimitChange,
 }: Props) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const handleGoToPage = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const input = e.currentTarget.elements.namedItem(
@@ -29,7 +42,7 @@ export default function PaginationControls({
 
   const renderPages = () => {
     const visiblePages: number[] = [];
-    const range = 5;
+    const range = isMobile ? 3 : 5;
     const half = Math.floor(range / 2);
 
     let start = Math.max(1, page - half);
@@ -49,12 +62,12 @@ export default function PaginationControls({
           <>
             <button
               onClick={() => onPageChange(1)}
-              className="px-3 py-1 border rounded bg-white dark:bg-gray-700 dark:text-white"
+              className="px-2 py-1 border rounded text-sm bg-white dark:bg-gray-700 dark:text-white"
             >
               1
             </button>
             {start > 2 && (
-              <span className="px-2 text-gray-500 dark:text-gray-300">...</span>
+              <span className="px-1 text-gray-500 dark:text-gray-300">...</span>
             )}
           </>
         )}
@@ -63,7 +76,7 @@ export default function PaginationControls({
           <button
             key={p}
             onClick={() => onPageChange(p)}
-            className={`px-3 py-1 border rounded ${
+            className={`px-2 py-1 text-sm border rounded ${
               p === page
                 ? "bg-blue-600 text-white border-blue-600"
                 : "bg-white dark:bg-gray-700 dark:text-white"
@@ -76,11 +89,11 @@ export default function PaginationControls({
         {end < totalPages && (
           <>
             {end < totalPages - 1 && (
-              <span className="px-2 text-gray-500 dark:text-gray-300">...</span>
+              <span className="px-1 text-gray-500 dark:text-gray-300">...</span>
             )}
             <button
               onClick={() => onPageChange(totalPages)}
-              className="px-3 py-1 border rounded bg-white dark:bg-gray-700 dark:text-white"
+              className="px-2 py-1 border rounded text-sm bg-white dark:bg-gray-700 dark:text-white"
             >
               {totalPages}
             </button>
@@ -91,10 +104,10 @@ export default function PaginationControls({
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-between gap-4 py-2 border-b border-gray-300 dark:border-gray-600">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-2 border-b border-gray-300 dark:border-gray-600">
       {/* Limit Selector */}
-      <div className="flex items-center gap-2">
-        <label htmlFor="limit" className="text-sm dark:text-white">
+      <div className="flex items-center gap-2 text-sm">
+        <label htmlFor="limit" className="dark:text-white">
           Items per page:
         </label>
         <select
@@ -102,7 +115,7 @@ export default function PaginationControls({
           value={limit}
           onChange={(e) => {
             onLimitChange(Number(e.target.value));
-            onPageChange(1); 
+            onPageChange(1);
           }}
           className="border px-2 py-1 rounded bg-white dark:bg-gray-700 dark:text-white"
         >
@@ -115,11 +128,11 @@ export default function PaginationControls({
       </div>
 
       {/* Pagination Buttons */}
-      <div className="flex items-center gap-2 flex-wrap">
+      <div className="flex items-center gap-1 flex-wrap overflow-x-auto max-sm:text-xs max-sm:gap-1 max-sm:px-1">
         <button
           onClick={() => onPageChange(Math.max(1, page - 1))}
           disabled={page === 1}
-          className="px-3 py-1 border rounded bg-white dark:bg-gray-700 dark:text-white"
+          className="px-2 py-1 text-sm border rounded bg-white dark:bg-gray-700 dark:text-white"
         >
           ‹ Prev
         </button>
@@ -129,15 +142,18 @@ export default function PaginationControls({
         <button
           onClick={() => onPageChange(Math.min(totalPages, page + 1))}
           disabled={page === totalPages}
-          className="px-3 py-1 border rounded bg-white dark:bg-gray-700 dark:text-white"
+          className="px-2 py-1 text-sm border rounded bg-white dark:bg-gray-700 dark:text-white"
         >
           Next ›
         </button>
       </div>
 
       {/* Go To Page */}
-      <form onSubmit={handleGoToPage} className="flex items-center gap-2">
-        <label htmlFor="page" className="text-sm dark:text-white">
+      <form
+        onSubmit={handleGoToPage}
+        className="flex items-center gap-2 text-sm"
+      >
+        <label htmlFor="page" className="dark:text-white">
           Go to:
         </label>
         <input
@@ -146,11 +162,11 @@ export default function PaginationControls({
           id="page"
           min={1}
           max={totalPages}
-          className="w-16 px-2 py-1 border rounded bg-white dark:bg-gray-700 dark:text-white"
+          className="w-16 px-2 py-1 border rounded bg-white dark:bg-gray-700 dark:text-white text-sm"
         />
         <button
           type="submit"
-          className="px-3 py-1 bg-blue-600 text-white rounded border border-blue-600 hover:bg-blue-700"
+          className="px-2 py-1 bg-blue-600 text-white rounded border border-blue-600 hover:bg-blue-700 text-sm"
         >
           Go
         </button>
