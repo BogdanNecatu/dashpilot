@@ -10,6 +10,14 @@
 You can view the live deployed demo on Vercel: (https://dashpilot-app.vercel.app)
 
 
+## 🔐 Demo credentials: You can sign in using the following users:
+
+- **Email**: jose@test.com  
+  **Password**: Password111@
+
+- **Email**: ana@test.com  
+  **Password**: Password222@
+
 
 ## Technical Test: Completion Checklist
 
@@ -110,15 +118,6 @@ npm run test:e2e
 
 # All tests
 npm run test:all
-
-
-## 🔐 Demo credentials: You can sign in using the following users:
-
-- **Email**: jose@test.com  
-  **Password**: Password111@
-
-- **Email**: ana@test.com  
-  **Password**: Password222@
 
 
 ## 📁 Project Structure
