@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DashPilot",
   description:
-    "Data dashboard app built with Next.js, TypeScript and Tailwind CSS",
+    "Aplicación desarrollada por Necatu Bogdan. DashPilot © 2025 — Todos los derechos reservados.",
 };
 
 export default function RootLayout({

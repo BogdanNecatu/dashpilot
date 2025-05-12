@@ -35,6 +35,7 @@ export default function UserDetailCard({ user }: Props) {
         shadow-[0_4px_8px_rgba(0,0,0,0.1),inset_0_2px_4px_rgba(0,0,0,0.06)] 
         dark:shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_2px_3px_rgba(255,255,255,0.05)]
         px-4 sm:px-6 md:px-8 py-6 mt-6 space-y-6 overflow-hidden`}
+        data-testid="user-detail-card"
       >
         {/* Header */}
         <div className="flex flex-col sm:flex-row items-center sm:items-center gap-4 sm:gap-6 min-h-[160px]">

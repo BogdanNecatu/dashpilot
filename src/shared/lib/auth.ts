@@ -1,7 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { type NextAuthOptions } from "next-auth";
-import { mockUsers } from "@/entities/auth/lib/mockUsers";
+import { mockUsers } from "./mockUsers";
 import { SessionUser } from "@/shared/types";
 
 export const authOptions: NextAuthOptions = {

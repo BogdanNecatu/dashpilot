@@ -118,6 +118,7 @@ export default function PaginationControls({
             onPageChange(1);
           }}
           className="border px-2 py-1 rounded bg-white dark:bg-gray-700 dark:text-white"
+          data-testid="limit-selector"
         >
           {[20, 40, 60].map((n) => (
             <option key={n} value={n}>

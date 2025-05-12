@@ -27,10 +27,12 @@ export function useTheme(): [Theme, (theme: Theme) => void] {
       "(prefers-color-scheme: dark)"
     ).matches;
 
+    root.classList.remove("light", "dark");
+
     if (theme === "dark" || (theme === "system" && systemDark)) {
       root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
+    } else if (theme === "light" || (theme === "system" && !systemDark)) {
+      root.classList.add("light");
     }
   };
 

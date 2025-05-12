@@ -10,10 +10,17 @@ export default function ThemeSelector() {
       value={theme}
       onChange={(e) => setTheme(e.target.value as typeof theme)}
       className="bg-zinc-800 text-white text-sm px-2 py-1 rounded"
+      data-testid="theme-selector"
     >
-      <option value="system">System</option>
-      <option value="light">Light</option>
-      <option value="dark">Dark</option>
+      <option value="system" data-testid="theme-option-system">
+        System
+      </option>
+      <option value="light" data-testid="theme-option-light">
+        Light
+      </option>
+      <option value="dark" data-testid="theme-option-dark">
+        Dark
+      </option>
     </select>
   );
 }
