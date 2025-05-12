@@ -2,12 +2,20 @@ import axiosInstance from "@/shared/api/axiosInstance";
 import { useUserStore } from "../store/useUserStore";
 import { UsersApiResponse } from "../types";
 
-export const fetchAllUsers = async (): Promise<{
-  users: UsersApiResponse["users"];
-  total: number;
-}> => {
-  const store = useUserStore.getState();
+type StoreActions = {
+  setLoading: (loading: boolean) => void;
+  setUsers: (
+    users: UsersApiResponse["users"],
+    total: number,
+    page: number,
+    limit: number
+  ) => void;
+  setError: (msg: string) => void;
+};
 
+export const fetchAllUsers = async (
+  store: StoreActions = useUserStore.getState()
+): Promise<{ users: UsersApiResponse["users"]; total: number }> => {
   store.setLoading(true);
 
   try {
