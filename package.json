@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "test:unit": "jest",
+   "test": "jest --watch",
     "test:e2e": "cypress run",
     "test:all": "npm run test:unit && npm run test:e2e"
   },

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -20,16 +24,24 @@
     ],
     "baseUrl": "src",
     "paths": {
-      "@/*": ["./*"]
-    }
+      "@/*": [
+        "./*"
+      ]
+    },
+    "types": [
+      "jest",
+      "@testing-library/jest-dom",
+      "node"
+    ]
   },
   "include": [
-    "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/entities/user/service"
-  ],
+    "global.d.ts",
+    "next-env.d.ts",
+    "setupTests.ts",
+    "src",
+    ".next/types/**/*.ts"
+, "jest.config.ts"  ],
   "exclude": ["node_modules"],
-  "jsxImportSource": "react"
 }
