@@ -4,11 +4,11 @@ describe("Home Page", () => {
   });
 
   it("renders the homepage with title and dashboard button", () => {
-    cy.contains("Bienvenido a DashPilot").should("be.visible");
+    cy.contains("Welcome to DashPilot").should("be.visible");
 
-    cy.contains("Ir al Dashboard").should("be.visible");
+    cy.contains("Go to Dashboard").should("be.visible");
 
-    cy.contains("Aplicación de prueba técnica").should("be.visible");
+    cy.contains("Application developed with Next.js 14, Tailwind CSS and TypeScript").should("be.visible");
   });
 
   it("renders the logo image with proper alt text", () => {
@@ -18,13 +18,13 @@ describe("Home Page", () => {
   it("has semantic HTML elements for structure", () => {
     cy.get("section").should("exist");
 
-    cy.get("h1").should("contain.text", "Bienvenido a DashPilot");
+    cy.get("h1").should("contain.text", "Welcome to DashPilot");
   });
 
   it("redirects to login if user is not authenticated", () => {
     cy.clearCookies();
 
-    cy.contains("Ir al Dashboard").click();
+    cy.contains("Go to Dashboard").click();
 
     cy.url().should("include", "/login");
   });
@@ -34,13 +34,13 @@ describe("Home Page", () => {
 
     cy.reload();
 
-    cy.contains("Ir al Dashboard").click();
+    cy.contains("Go to Dashboard").click();
 
     cy.url().should("include", "/dashboard");
   });
 
   it("button has accessible label and hover class", () => {
-    cy.contains("Ir al Dashboard")
+    cy.contains("Go to Dashboard")
       .should("have.attr", "href", "/dashboard")
       .and("have.class", "hover:bg-blue-700");
   });
@@ -50,8 +50,8 @@ describe("Home Page", () => {
 
     cy.visit("/");
 
-    cy.contains("Bienvenido a DashPilot").should("be.visible");
-    cy.contains("Ir al Dashboard").should("be.visible");
+    cy.contains("Welcome to DashPilot").should("be.visible");
+    cy.contains("Go to Dashboard").should("be.visible");
   });
 });
 

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "DashPilot",
   description:
-    "Aplicación desarrollada por Necatu Bogdan. DashPilot © 2025 — Todos los derechos reservados.",
+    "Application developed by Necatu Bogdan. DashPilot © 2025 — All rights reserved.",
 };
 
 export default function RootLayout({
