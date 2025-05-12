@@ -24,37 +24,64 @@ export default function LoginForm() {
     setError: setStoreError,
   } = useUserStore();
 
+  const checkSecret = async () => {
+    try {
+      const res = await fetch("/api/auth/check-secret");
+      if (!res.ok) {
+        const data = await res.json();
+        if (data.error === "MISSING_SECRET") {
+          throw new Error("MISSING_SECRET");
+        }
+      }
+    } catch (err) {
+      throw new Error(
+        err instanceof Error ? "MISSING SECRET KEY": "Unexpected configuration error."
+      );
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
 
-    const result = await signIn("credentials", {
-      redirect: false,
-      email,
-      password,
-    });
+    try {
+      await checkSecret()
 
-    if (result?.ok) {
-      try {
-        setStoreLoading(true);
-        setStoreError(null);
-        const { users, total } = await fetchAllUsers();
-        setUsers(users, total, 1, 20);
-        router.push("/dashboard");
-      } catch (err) {
-        if (err instanceof Error) {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+
+      if (result?.ok) {
+        try {
+          setStoreLoading(true);
+          setStoreError(null);
+          const { users, total } = await fetchAllUsers();
+          setUsers(users, total, 1, 20);
+          router.push("/dashboard");
+        } catch (err) {
+          if (err instanceof Error) {
           setError("Login succeeded but user fetch failed: " + err.message);
         } else {
           setError("Unexpected error loading users after login.");
         }
-      } finally {
-        setStoreLoading(false);
+        } finally {
+          setStoreLoading(false);
+          setLoading(false);
+        }
+      } else {
         setLoading(false);
+        setError("Invalid credentials. Please try again.");
       }
-    } else {
+    } catch (err) {
       setLoading(false);
-      setError("Invalid credentials. Please try again.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "Unexpected error during login."
+      );
     }
   };
 

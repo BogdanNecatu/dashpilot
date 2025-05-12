@@ -1,5 +1,5 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/shared/lib/auth";
+import { authOptions } from "@/shared/api/auth";
 import { redirect } from "next/navigation";
 import UserDetailClient from "@/features/dataset/UserDetail/UserDetailClient/UserDetailClient";
 

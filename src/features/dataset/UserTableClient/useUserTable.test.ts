@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
 import { useUserTable } from "./useUserTable";
 import { usePaginatedUsers } from "@/shared/hooks/usePaginatedUsers/usePaginatedUsers";
-import { mockUsers } from "@/shared/mocks/mockTestUsers";
+import { mockUsers } from "@/shared/lib/mockTestUsers";
 
 jest.mock("@/shared/hooks/usePaginatedUsers/usePaginatedUsers");
 

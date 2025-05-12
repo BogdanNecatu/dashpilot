@@ -20,6 +20,8 @@ export default function UserTable() {
     sortDirection,
   } = useUserTable();
 
+  const hasSearch = search.trim().length > 0;
+
   return (
     <div className="flex flex-col gap-4">
       <div className="flex justify-between items-center">
@@ -32,13 +34,15 @@ export default function UserTable() {
         />
       </div>
 
-      <PaginationControls
-        page={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-        limit={limit}
-        onLimitChange={setLimit}
-      />
+      {!hasSearch && (
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+          limit={limit}
+          onLimitChange={setLimit}
+        />
+      )}
 
       {loading && <p>Loading...</p>}
       {error && <p className="text-red-500">{error}</p>}
@@ -93,7 +97,7 @@ export default function UserTable() {
                 onClick={() => (window.location.href = `/dataset/${u.id}`)}
               >
                 <td className="px-4 py-2 font-mono">
-                  {(page - 1) * limit + i + 1}
+                  {hasSearch ? i + 1 : (page - 1) * limit + i + 1}
                 </td>
                 <td className="px-4 py-2">
                   {u.firstName} {u.lastName}
@@ -108,13 +112,15 @@ export default function UserTable() {
         </table>
       </div>
 
-      <PaginationControls
-        page={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-        limit={limit}
-        onLimitChange={setLimit}
-      />
+      {!hasSearch && (
+        <PaginationControls
+          page={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+          limit={limit}
+          onLimitChange={setLimit}
+        />
+      )}
     </div>
   );
 }
