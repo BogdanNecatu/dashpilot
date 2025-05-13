@@ -19,11 +19,11 @@ export default function HomePage() {
       </div>
 
       <h1 className="text-4xl font-bold text-foreground">
-       Welcome to <span className="text-blue-600">DashPilot</span>
+        Welcome to <span className="text-blue-600">DashPilot</span>
       </h1>
 
       <p className="text-base text-muted-foreground max-w-xl leading-relaxed">
-        Application developed with Next.js 14, Tailwind CSS and
+        Application developed with Next.js 15, Tailwind CSS and
         TypeScript. Includes custom authentication, dashboard with graphs,
         data management and testing.
       </p>
