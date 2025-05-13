@@ -10,12 +10,11 @@ import logo from "@/assets/images/dashpilot.png";
 
 export default function Header() {
   const pathname = usePathname();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   return (
-   <header className="bg-zinc-900 text-white shadow-sm w-full dark:bg-zinc-700 dark:text-yellow-100 transition-colors">
+    <header className="bg-zinc-900 text-white shadow-sm w-full dark:bg-zinc-700 dark:text-yellow-100">
       <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        {/* Logo + Nombre */}
         <div className="flex items-center gap-4">
           <Link href="/">
             <div className="relative w-[180px] h-[40px]">
@@ -29,16 +28,14 @@ export default function Header() {
               />
             </div>
           </Link>
-          {session?.user && (
-            <span className="text-lg sm:text-xl font-semibold">
-              Hi, {session.user.name}
-            </span>
-          )}
+
+          <span className="text-lg sm:text-xl font-semibold min-w-[100px] block">
+            {status === "authenticated" && session?.user?.name && `Hi, ${session.user.name}`}
+          </span>
         </div>
 
-        {/* Navegación + Tema */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 w-full sm:w-auto sm:ml-auto">
-          {session?.user && (
+        {status === "authenticated" && session?.user && (
+          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-6 w-full sm:w-auto sm:ml-auto">
             <nav
               className={clsx(
                 "flex flex-col items-start gap-2",
@@ -76,13 +73,12 @@ export default function Header() {
                 Logout
               </button>
             </nav>
-          )}
 
-          {/* Selector de tema */}
-          <div className="sm:ml-6 mt-2 sm:mt-0">
-            <ThemeSelector />
+            <div className="sm:ml-6 mt-2 sm:mt-0">
+              <ThemeSelector />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </header>
   );

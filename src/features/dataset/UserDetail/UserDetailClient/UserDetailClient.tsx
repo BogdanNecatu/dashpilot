@@ -1,20 +1,32 @@
 "use client";
 
-import { useUserStore } from "@/entities/user/store/useUserStore";
-import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import UserDetail from "../UserDetail/UserDetail";
+import { useParams } from "next/navigation";
+import { useUserStore } from "@/entities/user/store/useUserStore";
 import { useEnsureUsersLoaded } from "@/shared/hooks/useEnsureUsersLoaded/useEnsureUsersLoaded";
+import UserDetail from "../UserDetail/UserDetail";
 
 export default function UserDetailClient() {
   const { id } = useParams();
-  useEnsureUsersLoaded();
-
   const isNumberId = Number(id);
-
   const { loading, hasUsers, getUserById } = useUserStore();
 
-  if (loading) {
+  useEnsureUsersLoaded();
+
+  const [readyToRender, setReadyToRender] = useState(false);
+
+  useEffect(() => {
+    if (!loading && hasUsers()) {
+      const timer = setTimeout(() => {
+        setReadyToRender(true);
+      }, 150);
+
+      return () => clearTimeout(timer);
+    }
+  }, [loading, hasUsers]);
+
+  if (loading || !readyToRender) {
     return (
       <section className="max-w-4xl mx-auto px-4 py-10 text-center">
         <p className="text-gray-500 dark:text-gray-300 text-lg animate-pulse">
