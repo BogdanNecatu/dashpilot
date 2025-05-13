@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "@/shared/hooks/useDebounce/useDebounce";
 import { usePaginatedUsers } from "@/shared/hooks/usePaginatedUsers/usePaginatedUsers";
 import { User } from "@/entities/user/types";
+import { useUserStore } from "@/entities/user/store/useUserStore";
 
 export type SortField = "name" | "birthDate" | "age";
 export type SortDirection = "asc" | "desc";
@@ -20,6 +21,12 @@ export const useUserTable = () => {
   useEffect(() => {
     setPage(1);
   }, [limit]);
+
+  useEffect(() => {
+  if (typeof window !== "undefined") {
+    useUserStore.getState().hydrateUsers();
+  }
+}, []);
 
   const filteredSortedUsers = useMemo(() => {
     const searchLower = debouncedSearch.toLowerCase();

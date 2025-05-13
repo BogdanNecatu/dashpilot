@@ -22,20 +22,26 @@ export const useUserStore = create<UserStore>((set, get) => ({
     }
   },
 
-  hydrateUsers: () => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem("user-store");
-      if (stored) {
-        const parsed: User[] = JSON.parse(stored);
-        set({
-          users: parsed,
-          total: parsed.length,
-          page: 1,
-          totalPages: Math.ceil(parsed.length / 20),
-        });
-      }
+  hasHydrated: false,
+
+hydrateUsers: () => {
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("user-store");
+    if (stored) {
+      const parsed: User[] = JSON.parse(stored);
+      set({
+        users: parsed,
+        total: parsed.length,
+        page: 1,
+        totalPages: Math.ceil(parsed.length / 20),
+        hasHydrated: true, 
+        loading: false,    
+      });
+    } else {
+      set({ hasHydrated: true, loading: false });
     }
-  },
+  }
+},
 
   setLoading: (loading) => set({ loading }),
   setError: (msg) => set({ error: msg }),

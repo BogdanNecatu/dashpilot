@@ -79,6 +79,7 @@ export type UserStore = {
   total: number;
   page: number;
   totalPages: number;
+  hasHydrated: boolean;
   loading: boolean;
   error: string | null;
 
