@@ -9,7 +9,8 @@ describe("Dataset and User Detail Page", () => {
   it("loads the dataset and navigates to user detail page", () => {
     cy.get("table").should("exist");
     cy.get("tbody tr").should("have.length.greaterThan", 0);
-
+    cy.get('input[placeholder*="Search"]').type("Abigail");
+    cy.wait(1000);
     cy.get("tbody tr").first().click();
 
     cy.url().should("match", /\/dataset\/\d+$/);

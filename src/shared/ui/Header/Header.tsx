@@ -17,7 +17,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
           <Link href="/">
-            <div className="relative w-[180px] h-[40px]">
+            <div className="relative w-[180px] h-[40px]" data-cy="logo">
               <Image
                 src={logo}
                 alt="DashPilot Logo"

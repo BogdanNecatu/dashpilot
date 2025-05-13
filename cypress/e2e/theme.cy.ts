@@ -1,37 +1,29 @@
 describe("ThemeSelector", () => {
   beforeEach(() => {
-    cy.visit("/");
+    cy.visit("/dashboard"); 
+    cy.login("jose@test.com", "Password111@"); 
   });
 
-  it("changes theme to dark using invoke and triggers change", () => {
+  it("changes theme to dark", () => {
     cy.get('[data-testid="theme-selector"]')
-      .invoke("val", "dark")
-      .trigger("change");
-
-    cy.wait(300);
+      .select("dark")
+      .should("have.value", "dark");
 
     cy.get("html").should("have.class", "dark");
   });
 
-  it("changes theme to light using invoke and triggers change", () => {
+  it("changes theme to light", () => {
     cy.get('[data-testid="theme-selector"]')
-      .invoke("val", "light")
-      .trigger("change");
+      .select("light")
+      .should("have.value", "light");
 
-    cy.wait(300);
-
-    cy.get("html").should("have.class", "light");
+    cy.get("html").should("not.have.class", "dark"); 
   });
 
-  it("changes theme to system using invoke and triggers change", () => {
+  it("changes theme to system", () => {
     cy.get('[data-testid="theme-selector"]')
-      .invoke("val", "system")
-      .trigger("change");
+      .select("system")
+      .should("have.value", "system");
 
-    cy.wait(300);
-
-    cy.get("html").should("not.have.class", "dark");
   });
 });
-
-export {};

@@ -8,7 +8,7 @@ describe("Home Page", () => {
 
     cy.contains("Go to Dashboard").should("be.visible");
 
-    cy.contains("Application developed with Next.js 14, Tailwind CSS and TypeScript").should("be.visible");
+    cy.contains("Application developed with Next.js 15, Tailwind CSS and TypeScript").should("be.visible");
   });
 
   it("renders the logo image with proper alt text", () => {
