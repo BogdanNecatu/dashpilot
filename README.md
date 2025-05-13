@@ -210,6 +210,7 @@ Includes real-time charts and filters:
 
 ## 📂 .env.local (Use this structure)
 NEXTAUTH_SECRET=your-secret-here
+NEXTAUTH_URL=http://localhost:3000
 
 
 ## 🛠 Tech Stack
@@ -234,7 +235,7 @@ Tailwind with PostCSS
 ## 🚀 Deployment
 To deploy in Vercel:
 
-Set NEXTAUTH_SECRET in your Vercel environment variables.
+Set NEXTAUTH_SECRET and NEXTAUTH_URL in your Vercel environment variables.
 
 Build and deploy as standard Next.js app.
 
