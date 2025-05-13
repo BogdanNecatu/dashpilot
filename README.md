@@ -101,22 +101,22 @@ Task 7: Documentation
 
 ## ⚙️ Scripts
 
-# Development server
+### Development server
 npm run dev
 
-# Production build
+### Production build
 npm run build && npm run start
 
-# Lint check
+### Lint check
 npm run lint
 
-# Unit tests (Jest + React Testing Library)
+### Unit tests (Jest + React Testing Library)
 npm run test
 
-# E2E tests (Cypress)
+### E2E tests (Cypress)
 npm run test:e2e
 
-# All tests
+### All tests
 npm run test:all
 
 
