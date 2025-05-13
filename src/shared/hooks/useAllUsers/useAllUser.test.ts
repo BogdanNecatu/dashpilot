@@ -1,7 +1,7 @@
 import { renderHook, waitFor } from "@testing-library/react";
 import { useAllUsers } from "./useAllUsers";
 import { useUserStore } from "@/entities/user/store/useUserStore";
-import { mockUsers } from "@/shared/lib/mockTestUsers";
+import { mockUsers } from "@/shared/lib/mocks/mockTestUsers";
 import * as userService from "@/entities/user/service/service";
 
 jest.mock("@/entities/user/service/service", () => ({

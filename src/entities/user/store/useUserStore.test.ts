@@ -1,7 +1,7 @@
 /// <reference types="jest" />
 import { act } from "@testing-library/react";
 import { useUserStore } from "./useUserStore";
-import { mockUsers } from "@/shared/lib/mockTestUsers";
+import { mockUsers } from "@/shared/lib/mocks/mockTestUsers";
 
 beforeEach(() => {
   useUserStore.setState({

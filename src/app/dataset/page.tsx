@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth } from "@/shared/lib/auth";
 import { redirect } from "next/navigation";
 import DatasetClient from "@/features/dataset/UserTableClient/UserTableClient";
 
