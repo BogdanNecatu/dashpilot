@@ -13,7 +13,7 @@ export default function Header() {
   const { data: session } = useSession();
 
   return (
-   <header className="bg-zinc-900 text-white shadow-sm w-full dark:bg-yellow-950 dark:text-yellow-100 transition-colors">
+   <header className="bg-zinc-900 text-white shadow-sm w-full dark:bg-zinc-700 dark:text-yellow-100 transition-colors">
       <div className="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         {/* Logo + Nombre */}
         <div className="flex items-center gap-4">
