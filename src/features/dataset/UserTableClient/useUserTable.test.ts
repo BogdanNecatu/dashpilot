@@ -1,23 +1,15 @@
 import { renderHook, act } from "@testing-library/react";
 import { useUserTable } from "./useUserTable";
-import { usePaginatedUsers } from "@/shared/hooks/usePaginatedUsers/usePaginatedUsers";
+import { useUserStore } from "@/entities/user/store/useUserStore";
 import { mockUsers } from "@/shared/lib/mocks/mockTestUsers";
 
-jest.mock("@/shared/hooks/usePaginatedUsers/usePaginatedUsers");
-
-describe("useUserTable", () => {
-  let mockUsePaginatedUsers: jest.Mock;
-
+describe("useUserTable (con store real)", () => {
   beforeEach(() => {
-  
-    mockUsePaginatedUsers = jest.fn().mockReturnValue({
+    useUserStore.setState({
       users: mockUsers,
-      totalPages: 3,
       loading: false,
       error: null,
     });
-
-    (usePaginatedUsers as jest.Mock).mockImplementation(mockUsePaginatedUsers);
   });
 
   it("should initialize with default values", () => {
@@ -55,13 +47,24 @@ describe("useUserTable", () => {
     const { result } = renderHook(() => useUserTable());
 
     act(() => {
-      result.current.setSearch("John");
+      result.current.setSearch("john");
     });
 
-    expect(result.current.search).toBe("John");
+    expect(result.current.search).toBe("john");
   });
 
-  it("should toggle sorting direction on repeated sort field clicks", () => {
+  it("should filter users by firstName or lastName", () => {
+    const { result } = renderHook(() => useUserTable());
+
+    act(() => {
+      result.current.setSearch(mockUsers[0].firstName.slice(0, 2)); 
+    });
+
+    const filtered = result.current.users;
+    expect(filtered.some((u) => u.id === mockUsers[0].id)).toBe(true);
+  });
+
+  it("should toggle sorting direction on same field", () => {
     const { result } = renderHook(() => useUserTable());
 
     act(() => {
@@ -78,7 +81,7 @@ describe("useUserTable", () => {
     expect(result.current.sortDirection).toBe("desc");
   });
 
-  it("should change sort field and reset direction to ascending", () => {
+  it("should change sort field and reset to ascending", () => {
     const { result } = renderHook(() => useUserTable());
 
     act(() => {

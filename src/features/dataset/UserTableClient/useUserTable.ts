@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "@/shared/hooks/useDebounce/useDebounce";
-import { usePaginatedUsers } from "@/shared/hooks/usePaginatedUsers/usePaginatedUsers";
 import { User } from "@/entities/user/types";
 import { useUserStore } from "@/entities/user/store/useUserStore";
 
@@ -16,26 +15,28 @@ export const useUserTable = () => {
   const [sortField, setSortField] = useState<SortField>("name");
   const [sortDirection, setSortDirection] = useState<SortDirection>("asc");
 
-  const { users, totalPages, loading, error } = usePaginatedUsers(page, limit);
+  const allUsers = useUserStore((state) => state.users);
+  const loading = useUserStore((state) => state.loading);
+  const error = useUserStore((state) => state.error);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      useUserStore.getState().hydrateUsers();
+    }
+  }, []);
 
   useEffect(() => {
     setPage(1);
   }, [limit]);
 
-  useEffect(() => {
-  if (typeof window !== "undefined") {
-    useUserStore.getState().hydrateUsers();
-  }
-}, []);
-
   const filteredSortedUsers = useMemo(() => {
     const searchLower = debouncedSearch.toLowerCase();
 
-    const filtered = users.filter(
-      (u) =>
-        `${u.firstName} ${u.lastName}`.toLowerCase().includes(searchLower) ||
-        u.email.toLowerCase().includes(searchLower)
-    );
+    const filtered = allUsers.filter((u) => {
+      const first = u.firstName.toLowerCase();
+      const last = u.lastName.toLowerCase();
+      return first.includes(searchLower) || last.includes(searchLower);
+    });
 
     const sorted = [...filtered].sort((a: User, b: User) => {
       let aVal: string | number;
@@ -58,10 +59,16 @@ export const useUserTable = () => {
     });
 
     return sorted;
-  }, [users, debouncedSearch, sortField, sortDirection]);
+  }, [allUsers, debouncedSearch, sortField, sortDirection]);
+
+  const totalPages = Math.ceil(filteredSortedUsers.length / limit);
+  const paginatedUsers = useMemo(() => {
+    const start = (page - 1) * limit;
+    return filteredSortedUsers.slice(start, start + limit);
+  }, [filteredSortedUsers, page, limit]);
 
   const toggleSort = (field: SortField) => {
-    if (field === sortField) {
+    if (sortField === field) {
       setSortDirection((prev) => (prev === "asc" ? "desc" : "asc"));
     } else {
       setSortField(field);
@@ -70,18 +77,20 @@ export const useUserTable = () => {
   };
 
   return {
+    users: paginatedUsers,
+    totalPages,
     page,
     limit,
     search,
-    sortField,
-    sortDirection,
-    users: filteredSortedUsers,
-    totalPages,
-    loading,
-    error,
     setPage,
     setLimit,
     setSearch,
+    sortField,
+    setSortField,
+    sortDirection,
+    setSortDirection,
     toggleSort,
+    loading,
+    error,
   };
 };

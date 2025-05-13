@@ -2,8 +2,8 @@
 
 import { useUserTable } from "./useUserTable";
 import PaginationControls from "../PaginationControls/PaginationControls";
-
-export default function UserTable() {
+import UserTable from "../UserTable/UserTable"; 
+export default function UserTableClient() {
   const {
     page,
     limit,
@@ -27,10 +27,11 @@ export default function UserTable() {
       <div className="flex justify-between items-center">
         <input
           type="text"
-          placeholder="Search by name or email..."
+          placeholder="Search by name..."
           className="px-2 py-1 border rounded w-full md:w-1/3 dark:bg-gray-800 dark:text-white"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          spellCheck={false}
         />
       </div>
 
@@ -52,73 +53,17 @@ export default function UserTable() {
       )}
 
       {users.length > 0 && (
-        <div className="overflow-x-auto border rounded shadow-sm">
-          <table className="min-w-full table-auto text-sm">
-            <thead className="bg-gray-100 dark:bg-gray-800 text-left">
-              <tr className="text-black dark:text-white">
-                <th className="px-4 py-2">#</th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => toggleSort("name")}
-                >
-                  Name{" "}
-                  {sortField === "name"
-                    ? sortDirection === "asc"
-                      ? "▲"
-                      : "▼"
-                    : ""}
-                </th>
-                <th className="px-4 py-2">Email</th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => toggleSort("birthDate")}
-                >
-                  Birth Date{" "}
-                  {sortField === "birthDate"
-                    ? sortDirection === "asc"
-                      ? "▲"
-                      : "▼"
-                    : ""}
-                </th>
-                <th
-                  className="px-4 py-2 cursor-pointer"
-                  onClick={() => toggleSort("age")}
-                >
-                  Age{" "}
-                  {sortField === "age"
-                    ? sortDirection === "asc"
-                      ? "▲"
-                      : "▼"
-                    : ""}
-                </th>
-                <th className="px-4 py-2">Gender</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u, i) => (
-                <tr
-                  key={u.id}
-                  className="hover:bg-blue-100 dark:hover:bg-zinc-800 cursor-pointer"
-                  onClick={() => (window.location.href = `/dataset/${u.id}`)}
-                >
-                  <td className="px-4 py-2 font-mono">
-                    {hasSearch ? i + 1 : (page - 1) * limit + i + 1}
-                  </td>
-                  <td className="px-4 py-2">
-                    {u.firstName} {u.lastName}
-                  </td>
-                  <td className="px-4 py-2">{u.email}</td>
-                  <td className="px-4 py-2">{u.birthDate}</td>
-                  <td className="px-4 py-2">{u.age}</td>
-                  <td className="px-4 py-2">{u.gender}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <UserTable
+          users={users}
+          sortField={sortField}
+          sortDirection={sortDirection}
+          toggleSort={toggleSort}
+          page={page}
+          limit={limit}
+          hasSearch={hasSearch}
+        />
       )}
 
-      {/* Pagination again if not searching */}
       {!hasSearch && users.length > 0 && (
         <PaginationControls
           page={page}
